@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -14,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts=Post::all();
+        $posts=Post::paginate(1);
+       //$posts=Post::all();
+
 return view('index',compact('posts'));
     }
 
@@ -25,6 +28,7 @@ return view('index',compact('posts'));
      */
     public function create()
     {
+
         return view('create');
     }
 
@@ -36,7 +40,17 @@ return view('index',compact('posts'));
      */
     public function store(Request $request)
     {
-        Post::create($request->all());
+       $posts =$request->validate([
+            'title' =>'required',
+            'description' => 'required',
+           'image' => 'required|image|mimes:png,jpg,gif',
+        ]);
+
+    $filename=Storage::putFile("posts",$posts['image']);//هذا السطر بخزن الصورة نفسها داخل ملف اسمه بوستس هوي بعمله داخل الستورج وبشفر الصورة وبحط امتداه
+    //dd( $filename);
+    $posts['image']=$filename;//اخلي الاسم بالداتا بيس هوي الاسم الجديد للصورة بعد التشفير
+    //dd($request->all());
+        Post::create($posts);
         return redirect()->route('posts.index')->with(['status' => true , "message" => 'post created successfully']);
     }
 

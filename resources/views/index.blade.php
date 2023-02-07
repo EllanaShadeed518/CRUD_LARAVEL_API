@@ -15,7 +15,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Description</th>
-                <th scope="col">Operations</th>
+                <th scope="col">Image</th>
+
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $post->title }}</td>
                     <td>{{ $post->description }}</td>
+                    <td><img src="{{ asset("storage/$post->image") }}"></td>
                     <td>
                         <div class="d-flex">
                             <form action="{{ route('posts.edit' , ['post' => $post->id]) }}" method="GET">
@@ -47,4 +49,5 @@
 
         </tbody>
     </table>
+    {{$posts->links()}}
 @endsection
