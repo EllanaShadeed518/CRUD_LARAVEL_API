@@ -21,10 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 //crud
 Route::get('/',[ PostController::class,'index']);
-Route::get('/posts/show/{id}',[ PostController::class,'show']);
-Route::post('/posts/store',[ PostController::class,'store']);
-Route::put('/posts/update/{id}',[ PostController::class,'update']);
-Route::delete('/posts/delete/{id}',[ PostController::class,'delete']);
+Route::get('/posts/show/{id}',[ PostController::class,'show'])->middleware('auth:sanctum');
+Route::post('/posts/store',[ PostController::class,'store'])->middleware('auth:sanctum');
+Route::put('/posts/update/{id}',[ PostController::class,'update'])->middleware('auth:sanctum');
+Route::delete('/posts/delete/{id}',[ PostController::class,'delete'])->middleware('auth:sanctum');
 //Auth
 Route::post('/user/register',[ AuthController::class,'register']);
 Route::post('/user/login',[ AuthController::class,'login']);

@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,10 +26,13 @@ return new PostResource($post);//when return one object create object from resou
 
     }
     public function store(Request $request){
+
+
 $validator=Validator::make($request->all(),[
     'title'=>'required',
     'description'=>'required',
     'image'=>'required',
+
 ]);
 if($validator->fails()){
     return response()->json(['msg'=>$validator->errors()]);
@@ -40,6 +44,7 @@ if($validator->fails()){
             'title'=>$request->title,
             'description'=>$request->description,
             'image'=>$fileName,
+            'user_id'=>$request->id,
         ]);
         return response()->json(['msg'=>'data inserted succsesfully',
         'post'=>new PostResource($post),//return data to frontend use resource

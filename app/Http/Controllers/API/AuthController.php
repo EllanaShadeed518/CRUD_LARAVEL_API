@@ -31,7 +31,7 @@ class AuthController extends Controller
             //create token
             $token=$user->createToken('personal access token')->plainTextToken;//when use sanctum use create token to create token for user who register and store this token in personal accsses token
             $user->token=$token;
-            return response()->json(['msg'=>'data registered succsesfully',
+            return response()->json(['msg'=>'user registered succsesfully',
 
             'user'=>$user,//or return data without resourse
         ]);}
