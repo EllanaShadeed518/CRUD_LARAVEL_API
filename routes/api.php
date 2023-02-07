@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PostController;
 
 /*
@@ -18,9 +19,13 @@ use App\Http\Controllers\API\PostController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+//crud
 Route::get('/',[ PostController::class,'index']);
 Route::get('/posts/show/{id}',[ PostController::class,'show']);
 Route::post('/posts/store',[ PostController::class,'store']);
 Route::put('/posts/update/{id}',[ PostController::class,'update']);
 Route::delete('/posts/delete/{id}',[ PostController::class,'delete']);
+//Auth
+Route::post('/user/register',[ AuthController::class,'register']);
+Route::post('/user/login',[ AuthController::class,'login']);
+Route::post('/user/logout',[ AuthController::class,'logout'])->middleware('auth:sanctum');//you should add middleware auth:sanctum beacuse logout work  when user login ,if user have token
