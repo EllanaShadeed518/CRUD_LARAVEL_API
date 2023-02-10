@@ -17,9 +17,9 @@ class PostController extends Controller
         return PostResource::collection($posts);//when return group of data
     }
     public function show($id){
-$post=Post::find($id);//not write fail when use api beacuse api not return to view
-if($post==null){
-    return response()->json(['msg'=>'not found']);
+       $post=Post::find($id);//not write fail when use api beacuse api not return to view
+        if($post==null){
+         return response()->json(['msg'=>'not found']);
 
 }
 return new PostResource($post);//when return one object create object from resourse not use collection
@@ -80,10 +80,13 @@ if($validator->fails()){
             }
 
             public function delete($id){
-                $post=POST::where('id','=',$id)->first();
+
+                $post=POST::find($id);
+
                 $post->delete();
                 return response()->json(['msg'=>'data deleted sucsees','post'=>$post]);
             }
 
 
-}
+
+}   ?>

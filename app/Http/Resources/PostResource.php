@@ -19,6 +19,7 @@ class PostResource extends JsonResource
             'title'=>$this->title,
             'description'=>$this->description,
             'image'=>asset('storage').'/'.$this->image,
+            'user'=>$this->user->name,
         ];
     }
 }
